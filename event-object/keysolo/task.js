@@ -4,6 +4,7 @@ class Game {
     this.wordElement = container.querySelector('.word');
     this.winsElement = container.querySelector('.status__wins');
     this.lossElement = container.querySelector('.status__loss');
+    this.timeElement = container.querySelector('.status__time')
 
     this.reset();
 
@@ -17,14 +18,11 @@ class Game {
   }
 
   registerEvents() {
-    /*
-      TODO:
-      Написать обработчик события, который откликается
-      на каждый введённый символ.
-      В случае правильного ввода слова вызываем this.success()
-      При неправильном вводе символа - this.fail();
-      DOM-элемент текущего символа находится в свойстве this.currentSymbol.
-     */
+     document.addEventListener("keyup", () => {
+       if (this.currentSymbol.textContent.toUpperCase() === String.fromCharCode(event.keyCode)) {
+         this.success()
+       } else this.fail()
+     })
   }
 
   success() {
@@ -48,6 +46,7 @@ class Game {
     if (++this.lossElement.textContent === 5) {
       alert('Вы проиграли!');
       this.reset();
+
     }
     this.setNewWord();
   }
