@@ -17,24 +17,22 @@ function addedProductsCart(event) {
     const product = event.target.closest('.product');
     const id = product.dataset.id;
     const countFromProduct = +event.target.parentElement.querySelector('.product__quantity-value').innerText;
-
-    for (let item of productControls.children) {
-        if (item.dataset.id === id) {
-            let productCount = item.querySelector('.cart__product-count');
-            let total = +productCount.innerText;
-            productCount.innerText = total + countFromProduct;
-            return false;
-        }
-    }
     const productImg = product.querySelector('.product__image').src;
     const productValue = product.querySelector('.product__quantity-value').innerText;
     const productToCart = `<div class="cart__product" data-id="${id}">
                                 <img class="cart__product-image" src="${productImg}">
                                 <div class="cart__product-count">${productValue}</div>
                             </div>`;
-    if (Number(productValue) !== 0) {
-        productControls.insertAdjacentHTML('beforeend', productToCart);
-    } else alert('Введите количество продуктов')
+    const productInCard = Array.from(productControls.querySelectorAll('[data-id]')).find((element) => element.dataset.id === id);
+    if(productInCard) {
+        let productCount = productInCard.querySelector('.cart__product-count');
+        let total = +productCount.innerText;
+        productCount.innerText = total + countFromProduct;
+    } else {
+        if (Number(productValue) !== 0) {
+            productControls.insertAdjacentHTML('beforeend', productToCart);
+        } else alert('Введите количество продуктов')
+    }
 }
 
 productQuantityControl.forEach((item) => {
