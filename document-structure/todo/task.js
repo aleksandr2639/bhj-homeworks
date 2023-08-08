@@ -11,20 +11,18 @@ if (localStorage.getItem('tasks')) {
 }
 function addTaskList (event) {
     event.preventDefault()
-    if(input.value) {
-        const taskText = input.value
-        const newTask = {
-            id: Date.now(),
-            text: taskText,
-            done: false
-        }
+    input.value.trim()
 
-        tasks.push(newTask)
+    const newTask = {
+        id: Date.now(),
+        text: input.value,
+        done: false
+    }
+    tasks.push(newTask)
 
-        saveToLocalStorage()
+    saveToLocalStorage()
 
-        renderTask(newTask)
-    } else alert ('Заполните поле ввода')
+    renderTask(newTask)
     input.value = ""
     input.focus()
 }
