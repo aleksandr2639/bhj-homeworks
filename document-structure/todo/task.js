@@ -11,20 +11,23 @@ if (localStorage.getItem('tasks')) {
 }
 function addTaskList (event) {
     event.preventDefault()
-    input.value.trim()
+    let valueList = input.value.trim()
+    if (!valueList) {
+    return false
+    } else {
+        const newTask = {
+            id: Date.now(),
+            text: valueList,
+            done: false
+        }
+        tasks.push(newTask)
 
-    const newTask = {
-        id: Date.now(),
-        text: input.value,
-        done: false
+        saveToLocalStorage()
+
+        renderTask(newTask)
+        input.value = ""
+        input.focus()
     }
-    tasks.push(newTask)
-
-    saveToLocalStorage()
-
-    renderTask(newTask)
-    input.value = ""
-    input.focus()
 }
 function deleteTaskList(event) {
     if(event.target.closest('.task__remove')){
