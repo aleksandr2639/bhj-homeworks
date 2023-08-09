@@ -1,32 +1,38 @@
 const tooltip = Array.from(document.querySelectorAll('.has-tooltip'))
 
-function addTooltipElement(event) {
-    deleteTooltipElement(event)
-    event.preventDefault()
-    const valueTooltip = event.target.getAttribute('title'),
-        {left, top} = event.target.getBoundingClientRect(),
-        hasTooltip = document.querySelector('body'),
-        createTooltipElement = `<div class="tooltip" style="left: ${left}px; top: ${top + 25}px">${valueTooltip}</div>`;
-    hasTooltip.insertAdjacentHTML('beforeend',createTooltipElement)
+tooltip.forEach(item => {
+    item.addEventListener('click', (event) => {
+        event.preventDefault();
 
-    const addTooltipClassActive = hasTooltip.querySelector('.tooltip')
-    addTooltipClassActive.classList.toggle('tooltip_active')
+        const createTooltipElement = document.createElement('div');
+        createTooltipElement.classList.add('tooltip');
+        createTooltipElement.textContent = item.getAttribute('title');
+        createTooltipElement.classList.add('tooltip_active');
+
+        const tooltipActive = item.querySelector('.tooltip_active');
+        if(tooltipActive) {
+            tooltipActive.remove();
+            return;
+        }
+
+        deleteEl()
+
+        const {top, left} = item.getBoundingClientRect();
+        createTooltipElement.style.top =  top + 20 + 'px';
+        createTooltipElement.style.left = left + 'px';
+
+        item.appendChild(createTooltipElement);
+    });
+});
+
+
+function deleteEl() {
+    const countTooltip = document.querySelectorAll('.tooltip');
+    if (countTooltip.length >= 1) {
+        countTooltip[0].remove();
+    }
 }
 
-function deleteTooltipElement(event) {
-    if (!event.defaultPrevented) {
-        document.querySelectorAll('.tooltip').forEach((el) =>
-            el.remove()
-        )}
-}
-
-tooltip.forEach((item) =>
-    item.addEventListener('click', addTooltipElement))
-
-window.addEventListener("scroll", deleteTooltipElement);
-
-tooltip.forEach((item) =>
-    item.addEventListener('click', addTooltipElement))
+window.addEventListener('scroll', deleteEl)
 
 
-window.addEventListener("scroll", deleteTooltipElement);
