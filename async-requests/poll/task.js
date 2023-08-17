@@ -5,8 +5,9 @@ let xhr = new XMLHttpRequest()
 
 xhr.open('GET', 'https://students.netoservices.ru/nestjs-backend/poll')
 xhr.send()
-xhr.addEventListener('readystatechange', () => {
-    if(xhr.readyState === xhr.DONE) {
+
+xhr.onload = () => {
+    if(xhr.status === 200) {
             const data = JSON.parse(xhr.responseText).data
             pollTitle.innerText = data.title
             data.answers.forEach((answer) => {
@@ -18,6 +19,6 @@ xhr.addEventListener('readystatechange', () => {
             alert('Спасибо, ваш голос засчитан!')
             ))
     }
-})
+}
 
 
