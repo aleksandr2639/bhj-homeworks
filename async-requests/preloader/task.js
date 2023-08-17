@@ -6,8 +6,8 @@ let xhr = new XMLHttpRequest()
 xhr.open('GET', 'https://students.netoservices.ru/nestjs-backend/slow-get-courses')
 xhr.send()
 
-xhr.addEventListener('readystatechange', () => {
-    if(xhr.readyState === xhr.DONE) {
+xhr.onload = () => {
+    if(xhr.status === 200) {
         loader.classList.remove('loader_active')
         const data = JSON.parse(xhr.responseText).response.Valute
 
@@ -27,4 +27,4 @@ xhr.addEventListener('readystatechange', () => {
             itemElement.insertAdjacentHTML('beforeend', amountValute)
         }
     }
-})
+}
