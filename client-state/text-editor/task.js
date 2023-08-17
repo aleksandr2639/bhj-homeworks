@@ -9,6 +9,7 @@ window.addEventListener('load', () => {
         textEditor.value = localStorage.getItem('text');
     }
 })
+
 buttonClear.addEventListener('click', () => {
     localStorage.removeItem('text');
     textEditor.value ='';
