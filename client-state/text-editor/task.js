@@ -4,10 +4,7 @@ window.addEventListener('load', () => {
     textEditor.addEventListener('input', () => {
         localStorage.setItem('text', textEditor.value);
     })
-
-    if (localStorage.text) {
         textEditor.value = localStorage.getItem('text');
-    }
 })
 
 buttonClear.addEventListener('click', () => {
