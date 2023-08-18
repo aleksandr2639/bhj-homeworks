@@ -11,17 +11,20 @@ buttonSign.addEventListener('click', (e) => {
     const formData = new FormData(formSign);
 
     xhr.open('POST', 'https://students.netoservices.ru/nestjs-backend/auth');
+    xhr.responseType = 'json'
     xhr.send(formData);
 
     xhr.onload = () => {
-        if(xhr.status === 201) {
-            let valueResponse = JSON.parse(xhr.response);
-            if(valueResponse.success) {
-                localStorage.userId = valueResponse.user_id;
-                formElement.classList.remove('signin_active');
-                formWelcome.classList.add('welcome_active');
-                document.querySelector('#user_id').textContent = localStorage.userId;
-            } else alert('Неверный логин/пароль');
+        if(localStorage.getItem('userId')) {
+            alert('Неверный логин/пароль');
+            } else {
+                let valueResponse = xhr.response;
+                if(valueResponse.success) {
+                    localStorage.userId = valueResponse.user_id;
+                    formElement.classList.remove('signin_active');
+                    formWelcome.classList.add('welcome_active');
+                    document.querySelector('#user_id').textContent = localStorage.userId;
+            }
         }
     }
 })
