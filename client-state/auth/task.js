@@ -15,17 +15,13 @@ buttonSign.addEventListener('click', (e) => {
     xhr.send(formData);
 
     xhr.onload = () => {
-        if(localStorage.getItem('userId')) {
-            alert('Неверный логин/пароль');
-            } else {
                 let valueResponse = xhr.response;
                 if(valueResponse.success) {
                     localStorage.userId = valueResponse.user_id;
                     formElement.classList.remove('signin_active');
                     formWelcome.classList.add('welcome_active');
                     document.querySelector('#user_id').textContent = localStorage.userId;
-            }
-        }
+            } else alert('Неверный логин/пароль');
     }
 })
 buttonOut.addEventListener('click', () => {
